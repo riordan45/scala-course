@@ -1,0 +1,4 @@
+[debug] [scala1] Classpath dependencies List()
+[debug] [scala1] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'scala1' to '/home/freshpate/git/scala1/.bloop/scala1.json'
+[success] Generated .bloop/scala1.json
