@@ -135,3 +135,7 @@ SLF4J(I): Actual provider is of type [scribe.slf4j.ScribeServiceProvider@6ea8fcc
 2024.08.05 20:38:16 WARN  3.3.0 is no longer supported in the current Metals versions, using the last known supported version 1.2.2
 2024.08.05 20:38:18 WARN  Flyway upgrade recommended: H2 2.3.230 is newer than this version of Flyway and support has not been tested. The latest supported version of H2 is 2.2.220.
 2024.08.05 20:38:18 INFO  time: indexed workspace in 2.05s
+2024.08.05 21:20:05 INFO  Shutting down server
+2024.08.05 21:20:05 INFO  shutting down Metals
+2024.08.05 21:20:05 INFO  Shut down connection with build server.
+2024.08.05 21:20:05 INFO  Exiting server

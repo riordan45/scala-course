@@ -40,12 +40,12 @@ abstract class TweetSet extends TweetSetInterface:
    * Question: Can we implement this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def filter(p: Tweet => Boolean): TweetSet = ???
+  def filter(p: Tweet => Boolean): TweetSet = filterAcc(p, Empty())
 
   /**
    * This is a helper method for `filter` that propagates the accumulated tweets.
    */
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet
+  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = ???
 
   /**
    * Returns a new `TweetSet` that is the union of `TweetSet`s `this` and `that`.
@@ -75,7 +75,12 @@ abstract class TweetSet extends TweetSetInterface:
    * Question: Should we implement this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-  def descendingByRetweet: TweetList = ???
+  def descendingByRetweet: TweetList =
+    if this.isInstanceOf[Empty] then Nil
+    else
+      val most = mostRetweeted
+      Cons(most, remove(most).descendingByRetweet)
+
 
   /**
    * The following methods are already implemented
@@ -105,7 +110,7 @@ abstract class TweetSet extends TweetSetInterface:
   def foreach(f: Tweet => Unit): Unit
 
 class Empty extends TweetSet:
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = ???
+  override def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
 
   /**
    * The following methods are already implemented
@@ -119,9 +124,15 @@ class Empty extends TweetSet:
 
   def foreach(f: Tweet => Unit): Unit = ()
 
+  override def union(that: TweetSet): TweetSet = that
+  override def mostRetweeted: Tweet = throw new java.util.NoSuchElementException("Empty set")
+
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet:
 
-  def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = ???
+  override def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = 
+    val filterLeft = left.filterAcc(p, acc)
+    val filterRight = right.filterAcc(p, filterLeft)
+    if p(elem) then filterRight.incl(elem) else filterRight
 
 
   /**
@@ -156,6 +167,18 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet:
     left.foreach(f)
     right.foreach(f)
 
+  override def union(that: TweetSet): TweetSet = 
+    left.union(right.union(that.incl(elem)))
+  override def mostRetweeted: Tweet = {
+    val leftMost = if left.isInstanceOf[Empty] then elem else left.mostRetweeted
+    val rightMost = if right.isInstanceOf[Empty] then elem else right.mostRetweeted
+    if leftMost.retweets > elem.retweets then
+      if leftMost.retweets > rightMost.retweets then leftMost else rightMost
+    else
+      if elem.retweets > rightMost.retweets then elem else rightMost
+  }
+
+
 trait TweetList:
   def head: Tweet
   def tail: TweetList
@@ -178,14 +201,19 @@ object GoogleVsApple:
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-  lazy val googleTweets: TweetSet = ???
-  lazy val appleTweets: TweetSet = ???
+
+  def containsKeyword(tweet: Tweet, keywords: List[String]): Boolean =
+    keywords.exists(keyword => tweet.text.contains(keyword))
+
+  lazy val googleTweets: TweetSet = TweetReader.allTweets.filter(tweet => containsKeyword(tweet, google))
+  lazy val appleTweets: TweetSet = TweetReader.allTweets.filter(tweet => containsKeyword(tweet, apple))
 
   /**
    * A list of all tweets mentioning a keyword from either apple or google,
    * sorted by the number of retweets.
    */
-  lazy val trending: TweetList = ???
+  lazy val trending: TweetList = (googleTweets union appleTweets).descendingByRetweet
+
 
 object Main extends App:
   // Print the trending tweets
