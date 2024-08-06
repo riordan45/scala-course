@@ -1,0 +1,21 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/freshpate/git/scala-course/Functional Programming Principles in Scala/Week 4 - Types and Pattern Matching/target/scala-3.3.0/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	HuffmanInterface.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leaf.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Huffman.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leaf$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Huffman$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Fork$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Fork.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CodeTree.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	HuffmanInterface.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leaf.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Huffman.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Leaf$.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Huffman$.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Fork$.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Fork.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	CodeTree.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/freshpate/git/scala-course/Functional Programming Principles in Scala/Week 4 - Types and Pattern Matching/target/scala-3.3.0/classes.bak[0m

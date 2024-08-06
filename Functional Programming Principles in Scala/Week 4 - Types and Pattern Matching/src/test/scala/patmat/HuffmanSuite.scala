@@ -40,7 +40,10 @@ class HuffmanSuite extends munit.FunSuite:
     new TestTrees:
       assertEquals(decode(t1, encode(t1)("ab".toList)), "ab".toList)
   }
-
-
+  
+  // test("decoded secret message") {
+  // assertEquals(decodedSecret.mkString, "huffmanestcool")
+  // }
+  
   import scala.concurrent.duration.*
   override val munitTimeout = 10.seconds
