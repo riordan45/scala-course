@@ -1,0 +1,27 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = /home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 1 - For Expressions and Monads/target/scala-3.3.0/classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap$Node.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Heap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus4BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap$Node$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus5BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus3BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IntHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	QuickCheckHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus2BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus1BinomialHeap.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap$Node.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Heap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus4BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap$Node$.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus5BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus3BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	IntHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	QuickCheckHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus2BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Bogus1BinomialHeap.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: /home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 1 - For Expressions and Monads/target/scala-3.3.0/classes.bak[0m
