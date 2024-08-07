@@ -151,3 +151,9 @@ WARNING: Unmatched cancel notification for request id 767
 2024.08.06 19:11:44 INFO  Attaching to debuggee VM succeeded.
 2024.08.06 19:11:45 INFO  Canceling debug proxy for [forcomp.AnagramsSuite()]
 2024.08.06 19:11:45 INFO  Closing debug server tcp://0.0.0.0:33027
+2024.08.06 19:28:22 INFO  Shutting down server
+2024.08.06 19:28:22 INFO  shutting down Metals
+2024.08.06 19:28:22 INFO  Shut down connection with build server.
+2024.08.06 19:28:22 INFO  Shut down connection with build server.
+2024.08.06 19:28:22 INFO  Shut down connection with build server.
+2024.08.06 19:28:22 INFO  Exiting server

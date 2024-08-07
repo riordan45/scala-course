@@ -88,3 +88,9 @@ WARNING: Unmatched cancel notification for request id 262
 2024.08.06 19:38:00 INFO  Attaching to debuggee VM succeeded.
 2024.08.06 19:38:00 INFO  Canceling debug proxy for [quickcheck.QuickCheckSuite()]
 2024.08.06 19:38:00 INFO  Closing debug server tcp://0.0.0.0:38731
+2024.08.06 19:39:53 INFO  Shutting down server
+2024.08.06 19:39:53 INFO  shutting down Metals
+2024.08.06 19:39:53 INFO  Shut down connection with build server.
+2024.08.06 19:39:53 INFO  Shut down connection with build server.
+2024.08.06 19:39:53 INFO  Shut down connection with build server.
+2024.08.06 19:39:53 INFO  Exiting server
