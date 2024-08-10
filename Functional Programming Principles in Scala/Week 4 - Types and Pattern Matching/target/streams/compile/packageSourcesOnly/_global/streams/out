@@ -1,7 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/freshpate/git/scala-course/Functional Programming Principles in Scala/Week 4 - Types and Pattern Matching/target/scala-3.3.0/progfun1-patmat_3-0.1.0-SNAPSHOT-sources.jar ...[0m
-[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	patmat/HuffmanInterface.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/freshpate/git/scala-course/Functional Programming Principles in Scala/Week 4 - Types and Pattern Matching/src/main/scala/patmat/HuffmanInterface.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	patmat/Huffman.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/freshpate/git/scala-course/Functional Programming Principles in Scala/Week 4 - Types and Pattern Matching/src/main/scala/patmat/Huffman.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m

@@ -1,7 +1,0 @@
-[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 1 - For Expressions and Monads/target/scala-3.3.0/progfun2-quickcheck_3-0.1.0-SNAPSHOT-sources.jar ...[0m
-[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
-[0m[[0m[0mdebug[0m] [0m[0m	quickcheck/Heap.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 1 - For Expressions and Monads/src/main/scala/quickcheck/Heap.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	quickcheck/QuickCheck.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 1 - For Expressions and Monads/src/main/scala/quickcheck/QuickCheck.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
