@@ -1,0 +1,4 @@
+[debug] [week-2-lazy-evaluation] Classpath dependencies List()
+[debug] [week-2-lazy-evaluation] Dependencies from configurations List()
+[debug] Bloop wrote the configuration of project 'week-2-lazy-evaluation' to '/home/freshpate/git/scala-course/Functional Programming Design in Scala/Week 2 - Lazy Evaluation/.bloop/week-2-lazy-evaluation.json'
+[success] Generated .bloop/week-2-lazy-evaluation.json
