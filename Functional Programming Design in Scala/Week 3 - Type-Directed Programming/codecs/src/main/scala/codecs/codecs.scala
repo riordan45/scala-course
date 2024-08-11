@@ -178,9 +178,8 @@ trait DecoderInstances:
   /** A decoder for `Int` values. Hint: use the `isValidInt` method of `BigDecimal`. */
   // TODO Define a given value of type `Decoder[Int]`
   given Decoder[Int] = 
-    Decoder.fromFunction { 
-      case Json.Num(value: BigDecimal) if value.isValidInt => Some(value.toInt)
-      case _ => None
+    Decoder.fromPartialFunction { 
+      case Json.Num(value: BigDecimal) if value.isValidInt => value.toInt
     }
 
   /** A decoder for `String` values */
