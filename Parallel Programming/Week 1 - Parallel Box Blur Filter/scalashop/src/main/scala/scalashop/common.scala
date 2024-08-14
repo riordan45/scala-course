@@ -40,7 +40,37 @@ class Img(val width: Int, val height: Int, private val data: Array[RGBA]):
 def boxBlurKernel(src: Img, x: Int, y: Int, radius: Int): RGBA =
 
   // TODO implement using while loops
-  ???
+    var rSum, gSum, bSum, aSum = 0
+    var count = 0
+
+    // Define the range of the square area to consider.
+    val xMin = clamp(x - radius, 0, src.width - 1)
+    val xMax = clamp(x + radius, 0, src.width - 1)
+    val yMin = clamp(y - radius, 0, src.height - 1)
+    val yMax = clamp(y + radius, 0, src.height - 1)
+
+    // Iterate over the square area using while loops.
+    var i = xMin
+    while i <= xMax do
+      var j = yMin
+      while j <= yMax do
+        val pixel = src(i, j)
+        rSum += red(pixel)
+        gSum += green(pixel)
+        bSum += blue(pixel)
+        aSum += alpha(pixel)
+        count += 1
+        j += 1
+      i += 1
+
+    // Compute the average color components.
+    val rAvg = rSum / count
+    val gAvg = gSum / count
+    val bAvg = bSum / count
+    val aAvg = aSum / count
+
+    // Return the blurred RGBA value.
+    rgba(rAvg, gAvg, bAvg, aAvg)
 
 val forkJoinPool = ForkJoinPool()
 
