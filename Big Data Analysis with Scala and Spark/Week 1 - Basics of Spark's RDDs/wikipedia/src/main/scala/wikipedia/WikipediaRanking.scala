@@ -71,6 +71,10 @@ object WikipediaRanking extends WikipediaRankingInterface:
    *
    *   Note: this operation is long-running. It can potentially run for
    *   several seconds.
+   * rdd.flatMap(article => langs.filter(article.mentionsLanguage).map(lang => (lang, 1)))
+   *    .reduceByKey(_ + _) I could have also used this  mapping instead of relying on makeIndex above
+   *     No idea which is better though? I suppose mapping directly to (lang, 1) to use less memory but the drivers might
+   *     do some optimizations under the hood to make everything cost the same, no idea.
    */
   def rankLangsReduceByKey(langs: List[String], rdd: RDD[WikipediaArticle]): List[(String, Int)] = 
     makeIndex(langs, rdd).mapValues(_.size).collect().toList.sortBy(-_._2)
