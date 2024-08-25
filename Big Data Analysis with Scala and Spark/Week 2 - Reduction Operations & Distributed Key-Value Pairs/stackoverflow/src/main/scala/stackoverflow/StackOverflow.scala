@@ -128,9 +128,7 @@ class StackOverflow extends StackOverflowInterface with Serializable:
           val index = ls.indexOf(lang)
           if (index >= 0) Some(index) else None
 
-    scored.flatMap { case (question, score) =>
-    firstLangInTag(question.tags, langs).map(langIndex => (langIndex, score))
-  }
+    scored.map(p => (firstLangInTag(p._1.tags, langs).get * langSpread, p._2))
 
 
   /** Sample the vectors */
