@@ -46,7 +46,11 @@ object TimeUsage extends TimeUsageInterface:
     * @param line Raw fields
     */
   def row(line: List[String]): Row =
-    ???
+    Row.fromSeq(line.map {
+    case s if s.matches("-?\\d+(\\.\\d+)?") => 
+      if (s.contains(".")) s.toDouble else s.toInt
+    case s => s
+  })
 
   /** @return The initial data frame columns partitioned in three groups: primary needs (sleeping, eating, etc.),
     *         work and other (leisure activities)
@@ -64,7 +68,19 @@ object TimeUsage extends TimeUsageInterface:
     *    “t10”, “t12”, “t13”, “t14”, “t15”, “t16” and “t18” (those which are not part of the previous groups only).
     */
   def classifiedColumns(columnNames: List[String]): (List[Column], List[Column], List[Column]) =
-    ???
+    val primaryNeedsPrefixes = Set("t01", "t03", "t11", "t1801", "t1803")
+    val workPrefixes = Set("t05", "t1805")
+    val otherPrefixes = Set("t02", "t04", "t06", "t07", "t08", "t09", "t10", "t12", "t13", "t14", "t15", "t16", "t18")
+
+    val primaryNeedsColumns = columnNames.filter(name => primaryNeedsPrefixes.exists(prefix => name.startsWith(prefix))).map(col)
+    val workColumns = columnNames.filter(name => workPrefixes.exists(prefix => name.startsWith(prefix))).map(col)
+    val otherColumns = columnNames.filter(name =>
+      otherPrefixes.exists(prefix => name.startsWith(prefix)) &&
+      !primaryNeedsPrefixes.exists(prefix => name.startsWith(prefix)) &&
+      !workPrefixes.exists(prefix => name.startsWith(prefix))
+    ).map(col)
+
+    (primaryNeedsColumns, workColumns, otherColumns)
 
   /** @return a projection of the initial DataFrame such that all columns containing hours spent on primary needs
     *         are summed together in a single column (and same for work and leisure). The “teage” column is also
@@ -106,17 +122,24 @@ object TimeUsage extends TimeUsageInterface:
     // more sense for our use case
     // Hint: you can use the `when` and `otherwise` Spark functions
     // Hint: don’t forget to give your columns the expected name with the `as` method
-    val workingStatusProjection: Column = ???
-    val sexProjection: Column = ???
-    val ageProjection: Column = ???
+    val workingStatusProjection: Column = when($"telfs" >= 1 && $"telfs" < 3, "working")
+      .otherwise("not working")
+      .as("working")
+    val sexProjection: Column = when($"tesex" === 1, "male")
+      .otherwise("female")
+      .as("sex")
+    val ageProjection: Column = when($"teage" >= 15 && $"teage" <= 22, "young")
+      .when($"teage" >= 23 && $"teage" <= 55, "active")
+      .otherwise("elder")
+      .as("age")
 
     // Create columns that sum columns of the initial dataset
     // Hint: you want to create a complex column expression that sums other columns
     //       by using the `+` operator between them
     // Hint: don’t forget to convert the value to hours
-    val primaryNeedsProjection: Column = ???
-    val workProjection: Column = ???
-    val otherProjection: Column = ???
+    val primaryNeedsProjection: Column = primaryNeedsColumns.reduce(_ + _).divide(60).as("primaryNeeds")
+    val workProjection: Column = workColumns.reduce(_ + _).divide(60).as("work")
+    val otherProjection: Column = otherColumns.reduce(_ + _).divide(60).as("other")
     df
       .select(workingStatusProjection, sexProjection, ageProjection, primaryNeedsProjection, workProjection, otherProjection)
       .where($"telfs" <= 4) // Discard people who are not in labor force
@@ -139,7 +162,14 @@ object TimeUsage extends TimeUsageInterface:
     * Finally, the resulting DataFrame should be sorted by working status, sex and age.
     */
   def timeUsageGrouped(summed: DataFrame): DataFrame =
-    ???
+    summed
+    .groupBy($"working", $"sex", $"age")
+    .agg(
+      round(avg($"primaryNeeds"), 1).as("primaryNeeds"),
+      round(avg($"work"), 1).as("work"),
+      round(avg($"other"), 1).as("other")
+    )
+    .orderBy($"working", $"sex", $"age")
 
   /**
     * @return Same as `timeUsageGrouped`, but using a plain SQL query instead
@@ -154,7 +184,18 @@ object TimeUsage extends TimeUsageInterface:
     * @param viewName Name of the SQL view to use
     */
   def timeUsageGroupedSqlQuery(viewName: String): String =
-    ???
+    s"""
+       |SELECT
+       |  working,
+       |  sex,
+       |  age,
+       |  ROUND(AVG(primaryNeeds), 1) as primaryNeeds,
+       |  ROUND(AVG(work), 1) as work,
+       |  ROUND(AVG(other), 1) as other
+       |FROM $viewName
+       |GROUP BY working, sex, age
+       |ORDER BY working, sex, age
+       |""".stripMargin
 
   /**
     * @return A `Dataset[TimeUsageRow]` from the “untyped” `DataFrame`
@@ -164,7 +205,16 @@ object TimeUsage extends TimeUsageInterface:
     * cast them at the same time.
     */
   def timeUsageSummaryTyped(timeUsageSummaryDf: DataFrame): Dataset[TimeUsageRow] =
-    ???
+    timeUsageSummaryDf.map(row =>
+      TimeUsageRow(
+        row.getAs[String]("working"),
+        row.getAs[String]("sex"),
+        row.getAs[String]("age"),
+        row.getAs[Double]("primaryNeeds"),
+        row.getAs[Double]("work"),
+        row.getAs[Double]("other")
+    )
+  )
 
   /**
     * @return Same as `timeUsageGrouped`, but using the typed API when possible
@@ -178,7 +228,29 @@ object TimeUsage extends TimeUsageInterface:
     * Hint: you should use the `groupByKey` and `avg` methods.
     */
   def timeUsageGroupedTyped(summed: Dataset[TimeUsageRow]): Dataset[TimeUsageRow] =
-    ???
+    import org.apache.spark.sql.expressions.scalalang.typed
+
+    val grouped = summed.groupByKey(r => (r.working, r.sex, r.age))
+    
+    grouped
+      .agg(
+        typed.avg[TimeUsageRow](_.primaryNeeds).as[Double],
+        typed.avg[TimeUsageRow](_.work).as[Double],
+        typed.avg[TimeUsageRow](_.other).as[Double]
+      )
+      .map { case ((working, sex, age), avgPrimaryNeeds, avgWork, avgOther) =>
+        TimeUsageRow(
+          working,
+          sex,
+          age,
+          math.round(avgPrimaryNeeds * 10) / 10.0,
+          math.round(avgWork * 10) / 10.0,
+          math.round(avgOther * 10) / 10.0
+        )
+      }
+      .orderBy($"working", $"sex", $"age")
+
+
 
 /**
   * Models a row of the summarized data set
